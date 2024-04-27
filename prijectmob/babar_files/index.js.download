@@ -1,0 +1,1962 @@
+gsap.registerPlugin(ScrollTrigger);
+
+function v30isMobile() {
+    let flag = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    return flag;
+}
+
+let v30iswebp = v30isSupported();
+function v30isSupported() {
+    var canvas = document.createElement('canvas');
+    return canvas.toBlob && (new Image()).src !== undefined;
+}
+
+function lazyload() {
+    var images = document.getElementsByTagName('img');
+    var len = images.length;
+    var n = 0;      //存储图片加载到的位置，避免每次都从第一张图片开始遍历		
+    return function () {
+        for (var i = n; i < len; i++) {
+            if (images[i].getAttribute('src') === '' || images[i].getAttribute('src') === './zip/img/pc/kv-bg.jpg' || images[i].getAttribute('src') === './zip/img/mobi/kv-bg.jpg') {
+                if (v30iswebp) {
+                    images[i].src = IMAGE_HOST + images[i].getAttribute('data-setsrc') + '.webp';
+                } else {
+                    images[i].src = IMAGE_HOST + images[i].getAttribute('data-setsrc');
+                }
+            }
+        }
+    }
+}
+var loadImages = lazyload();
+// window.addEventListener('scroll', throttle(loadImages, 500, 1000), false);
+
+if (v30isMobile()) {
+    loadImages();          //初始化首页的页面图片
+    $('.v30-content-pc').html('');
+    v30mobiFun();
+} else {
+    loadImages();          //初始化首页的页面图片
+    v30pcFun();
+    v30mobiFun();
+}
+
+function v30pcFun() {
+
+    $('.v30-pc-section1 .item').hover(function () {
+        $(this).addClass('active');
+        $(this).siblings().addClass('active1');
+        $(this).find('.text1').addClass('active');
+        $(this).find('.text2').addClass('active');
+        $(this).find('.kv-arrow-icon2-img').addClass('active');
+        $(this).find('.kv-pic-img').addClass('active');
+
+        $(this).find('.kv-pic2_1-img').addClass('active');
+        $(this).find('.kv-pic2_2-img').addClass('active');
+        $(this).find('.kv-pic2_3-img').addClass('active');
+    }, function () {
+        $(this).removeClass('active');
+        $(this).siblings().removeClass('active1');
+        $(this).find('.text1').removeClass('active');
+        $(this).find('.text2').removeClass('active');
+        $(this).find('.kv-arrow-icon2-img').removeClass('active');
+        $(this).find('.kv-pic-img').removeClass('active');
+
+
+        $(this).find('.kv-pic2_1-img').removeClass('active');
+        $(this).find('.kv-pic2_2-img').removeClass('active');
+        $(this).find('.kv-pic2_3-img').removeClass('active');
+    });
+
+    $('.v30-pc-section1 .item').on('click', function () {
+        let index = $(this).data('index');
+        let top = '';
+        let name = '';
+        if (index == 1) {
+            name = 'Aura Light Portrait';
+            top = $('.v30-pc-section .v30-pc-section2-box').offset().top;
+        }
+        if (index == 2) {
+            name = "vivo's Slimmest Phone with 5000 mAh Battery";
+            top = $('.v30-pc-section .v30-pc-section12-box').offset().top;
+        }
+        if (index == 3) {
+            name = '12 GB + 12 GB Extended RAM';
+            top = $('.v30-pc-section14').offset().top;
+        }
+        window.dataLayer.push({
+            "event": "pdpBannerClick",
+            "bannerName": "v30",
+            "bannerPosition": name,
+            "productName": index
+        });
+        $('html,body').animate({ scrollTop: top }, 10);
+    });
+
+    gsap.from(".v30-pc-section1 .kv-bg-img", {
+        scrollTrigger: '.kv-bg-img',
+        opacity: 0,
+        y: -100,
+        duration: 1,
+    });
+
+    gsap.from('.v30-pc-section1 .kv-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section1',
+            scrub: 0.5,
+            start: 'top top',
+            end: 'top+=1200',
+        },
+        scale: 0.8,
+        y: 100,
+        duration: 1,
+    });
+
+    let v30pcsection2TL = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.v30-pc-section2 .v30-pc-section2-box',
+            start: 'top top',
+            end: '+=5000',
+            pin: ".v30-pc-section2",
+        }
+    });
+
+    v30pcsection2TL.from('.v30-pc-section2 .soft-light-ring-concept-bg2-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section2 .soft-light-ring-concept-bg2-img',
+            scrub: true,
+            start: 'top -30%',
+            end: '+1500',
+        },
+        opacity: 0,
+        duration: 1,
+    }).from('.v30-pc-section2 .soft-light-ring-concept-bg3-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section2 .soft-light-ring-concept-bg3-img',
+            scrub: true,
+            start: 'top -130%',
+            end: '+3000',
+        },
+        opacity: 0,
+        duration: 1,
+    }).from('.v30-pc-section2 .soft-light-ring-concept-bg4-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section2 .soft-light-ring-concept-bg4-img',
+            scrub: true,
+            start: 'top -230%',
+            end: '+4500',
+        },
+        opacity: 0,
+        duration: 1,
+    }).from('.v30-pc-section2 .soft-light-ring-concept-font', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section2 .soft-light-ring-concept-font',
+            scrub: true,
+            start: 'top -250%',
+            end: '+4500',
+        },
+        opacity: 0,
+        duration: 1,
+    });
+
+    let v30pcsection3swiperbox = new Swiper(".v30-pc-section3-swiperbox", {
+        effect: "creative",
+        creativeEffect: {
+            prev: {
+                translate: ["-100%", 0, 1],
+            },
+            next: {
+                translate: ["2.8%", "3.8%", -1],
+            },
+        },
+    });
+
+    gsap.from('.v30-pc-section3 .v30-pc-section3-swiperbox', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section3',
+            scrub: 0.5,
+            start: '-50% top-=300',
+            end: 'top+=100',
+        },
+        scale: 0.8,
+        y: 100,
+        duration: 1,
+    });
+
+    let v30pcsection3box = ScrollTrigger.create({
+        trigger: '.v30-pc-section .v30-pc-section3-box',
+        start: 'top top',
+        end: '+=2000',
+        pin: ".v30-pc-section3",
+        onUpdate: (progress, direction, isActive) => {
+            let num = progress.progress.toFixed(2);
+            if (num < 0.25) {
+                v30pcsection3swiperbox.slideTo(0, 1000);
+                $('.v30-pc-section .v30-pc-section3-box .dots-item1').addClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .dots-item1').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .characters-item1').addClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .characters-item1').siblings().removeClass('active');
+
+                $('.v30-pc-section .v30-pc-section3-box .swiper-slide2 .soft-light-ring-img').addClass('active');
+            }
+            if (num >= 0.25 && num < 0.5) {
+                v30pcsection3swiperbox.slideTo(1, 1000);
+                $('.v30-pc-section .v30-pc-section3-box .dots-item2').addClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .dots-item2').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .characters-item2').addClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .characters-item2').siblings().removeClass('active');
+
+                $('.v30-pc-section .v30-pc-section3-box .swiper-slide2 .soft-light-ring-img').removeClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .swiper-slide3 .soft-light-ring-img').addClass('active');
+            }
+            if (num >= 0.5 && num < 0.75) {
+                v30pcsection3swiperbox.slideTo(2, 1000);
+                $('.v30-pc-section .v30-pc-section3-box .dots-item3').addClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .dots-item3').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .characters-item3').addClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .characters-item3').siblings().removeClass('active');
+
+                $('.v30-pc-section .v30-pc-section3-box .swiper-slide3 .soft-light-ring-img').removeClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .swiper-slide4 .soft-light-ring-img').addClass('active');
+            }
+            if (num >= 0.75 && num < 0.9) {
+                v30pcsection3swiperbox.slideTo(3, 1000);
+                $('.v30-pc-section .v30-pc-section3-box .dots-item4').addClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .dots-item4').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .characters-item4').addClass('active');
+                $('.v30-pc-section .v30-pc-section3-box .characters-item4').siblings().removeClass('active');
+
+                $('.v30-pc-section .v30-pc-section3-box .swiper-slide4 .soft-light-ring-img').removeClass('active');
+            }
+        }
+    });
+
+    $('.v30-pc-section3 .dots-item').on('click', function () {
+        let index = $(this).data('index');
+        var array = [0, 0.25, 0.5, 0.75]
+        let v30pcsection3Top = v30pcsection3box.start + (v30pcsection3box.end - v30pcsection3box.start) * array[index]
+        v30pcsection3box.scroll(v30pcsection3Top);
+        v30pcsection3box.refresh();
+    });
+
+    let v30pcsection4box = ScrollTrigger.create({
+        trigger: '.v30-pc-section .v30-pc-section4-box',
+        start: 'top top',
+        end: '+=2200',
+        pin: ".v30-pc-section4",
+    });
+
+    gsap.from('.v30-pc-section4 .five-thousand-w-product2-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section4 .five-thousand-w-product1-img',
+            scrub: 2,
+            start: 'top 50%',
+            end: '+300',
+        },
+        y: 1000,
+        ease: 'none'
+    });
+
+    gsap.from('.v30-pc-section4 .introduce2-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section4 .five-thousand-w-product1-img',
+            scrub: 1,
+            start: 'top top-=600',
+            end: '+600',
+        },
+        opacity: 0,
+        y: 100,
+        ease: "none"
+    });
+
+    gsap.from('.v30-pc-section4 .introduce3-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section4 .five-thousand-w-product1-img',
+            scrub: 1,
+            start: 'top top-=1200',
+            end: '+1200',
+        },
+        opacity: 0,
+        y: 100,
+        ease: "none"
+    });
+
+    let v30pcsection5swiperbox = new Swiper(".v30-pc-section5-swiperbox", {
+        effect: "creative",
+        creativeEffect: {
+            prev: {
+                translate: ["-100%", 0, 1],
+            },
+            next: {
+                translate: ["2.8%", "3.8%", -1],
+            },
+        },
+    });
+
+    let v30pcsection5box = ScrollTrigger.create({
+        trigger: '.v30-pc-section .v30-pc-section5-box',
+        start: 'top top',
+        end: '+=2300',
+        pin: ".v30-pc-section5",
+        onUpdate: (progress, direction, isActive) => {
+            let num = progress.progress.toFixed(2);
+            if (num >= 0.51 && num < 0.71) {
+                v30pcsection5swiperbox.slideTo(0, 500);
+                $('.v30-pc-section .v30-pc-section5-box .dots-item1').addClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .dots-item1').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .characters-item1').addClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .characters-item1').siblings().removeClass('active');
+
+                $('.v30-pc-section .v30-pc-section5-box .swiper-slide2 .zeiss-lens-bag-img').addClass('active');
+            }
+            if (num >= 0.71 && num < 0.91) {
+                v30pcsection5swiperbox.slideTo(1, 500);
+                $('.v30-pc-section .v30-pc-section5-box .dots-item2').addClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .dots-item2').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .characters-item2').addClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .characters-item2').siblings().removeClass('active');
+
+                $('.v30-pc-section .v30-pc-section5-box .swiper-slide2 .zeiss-lens-bag-img').removeClass('active');
+            }
+        }
+    });
+
+    $('.v30-pc-section5 .dots-item').on('click', function () {
+        let index = $(this).data('index');
+        var array = [0.51, 0.71]
+        let v30pcsection5Top = v30pcsection5box.start + (v30pcsection5box.end - v30pcsection5box.start) * array[index]
+        v30pcsection5box.scroll(v30pcsection5Top);
+        v30pcsection5box.refresh();
+    });
+
+    gsap.to('.v30-pc-section .v30-pc-section5-box .zeiss-lens-bag-pic-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section .v30-pc-section5-box',
+            scrub: 0.5,
+            start: 'top -10%',
+            end: '+1000',
+            onLeave: () => {
+                $('.v30-pc-section .v30-pc-section5-box .zeiss-lens-bag-pic-img').hide();
+                $('.v30-pc-section .v30-pc-section5-box .dots-item1').addClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .dots-item1').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .characters-item1').addClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .characters-item1').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .dots').removeClass('active');
+            },
+            onEnterBack: () => {
+                $('.v30-pc-section .v30-pc-section5-box .zeiss-lens-bag-pic-img').show();
+                $('.v30-pc-section .v30-pc-section5-box .dots-item1').removeClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .dots-item1').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .characters-item1').removeClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .characters-item1').siblings().removeClass('active');
+                $('.v30-pc-section .v30-pc-section5-box .dots').addClass('active');
+            }
+        },
+        transformOrigin: "center center",
+        scale: 0.5251,
+        y: '-11.1%',
+        x: '0.29%',
+        duration: 3,
+    });
+
+    gsap.to('.v30-pc-section6 .outsole-bg-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section6',
+            scrub: true,
+            start: '-30% top',
+            end: '+200',
+        },
+        scale: 1,
+        duration: 1,
+    });
+
+    gsap.from('.v30-pc-section6 .text1,.v30-pc-section6 .text2', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section6',
+            scrub: 0.5,
+            start: '-50% top-=300',
+            end: 'top+=200',
+        },
+        y: 50,
+        duration: 1,
+    });
+
+    gsap.from('.v30-pc-section7 .vcs-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section7',
+            scrub: 0.5,
+            start: 'top 50%',
+            end: '+100',
+        },
+        scale: 1.1,
+    });
+
+    gsap.from('.v30-pc-section7 .characters-item1', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section7',
+            scrub: true,
+            start: 'top 70%',
+            end: '+100',
+        },
+        y: 300,
+    });
+
+    gsap.from('.v30-pc-section22 .front-wide-angle-pic-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section22',
+            scrub: 0.5,
+            start: 'top 50%',
+            end: '+100',
+        },
+        scale: 1.1,
+        y: 500
+    });
+
+    gsap.from('.v30-pc-section22 .box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section22',
+            scrub: 0.5,
+            start: 'top 50%',
+            end: '+100',
+        },
+        opacity: 0,
+        y: 100
+    });
+
+    let v30pcsection8box = ScrollTrigger.create({
+        trigger: '.v30-pc-section .v30-pc-section8-box',
+        start: 'top top',
+        end: '+=1500',
+        pin: ".v30-pc-section8",
+    });
+
+    gsap.to('.v30-pc-section8 .video1-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section8 .video1-box',
+            scrub: true,
+            start: 'top -20%',
+            end: '+1000',
+        },
+        transformOrigin: "center center",
+        scale: 0.831,
+        y: 0,
+        x: '32.1%',
+        duration: 3,
+    });
+
+    gsap.from('.v30-pc-section8 .characters-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section8 .characters-box',
+            scrub: true,
+            start: 'top -40%',
+            end: '+1100',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        x: -500,
+        duration: 3,
+    });
+
+    gsap.from('.v30-pc-section8 .tips', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section8 .characters-box',
+            scrub: true,
+            start: 'top -50%',
+            end: '+1100',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        duration: 3,
+    });
+
+    // let v30pcsection9box = ScrollTrigger.create({
+    //     trigger: '.v30-pc-section .v30-pc-section9-box',
+    //     start: 'top top',
+    //     end: '+=300',
+    //     pin: ".v30-pc-section9",
+    // });
+
+    gsap.from('.v30-pc-section9 .video-shooting-pic-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section9',
+            scrub: 0.5,
+            start: '-100% top-=100',
+            end: 'top+=50',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        x: 2353,
+        duration: 1,
+    });
+
+    gsap.from('.v30-pc-section10 .instantly1-box,.v30-pc-section10 .instantly2-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section10-box',
+            scrub: 0.5,
+            start: '-30% top-=10%',
+            end: 'top+=300',
+        },
+        y: 100,
+        ease: 'none',
+    });
+    gsap.from('.v30-pc-section10 .instantly3-box,.v30-pc-section10 .instantly4-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section10-box',
+            scrub: 0.5,
+            start: '-30% top-=20%',
+            end: 'top+=500',
+        },
+        y: 100,
+        ease: 'none',
+    });
+
+    gsap.from('.v30-pc-section11 .color-collection-bg-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section11',
+            scrub: 0.5,
+            start: '-50% top-=10%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-pc-section11 .title', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section11',
+            scrub: 0.5,
+            start: '-50% top-=300',
+            end: 'top+=200',
+        },
+        y: -100,
+        duration: 1,
+    });
+
+    let v30pcsection12TL = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.v30-pc-section .v30-pc-section12-box',
+            start: 'top top',
+            end: '+=2500',
+            pin: ".v30-pc-section12",
+        }
+    });
+
+    gsap.from('.v30-pc-section12 .given-to-philandering-pic-box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12',
+            scrub: 0.5,
+            start: '-50% top-=10%',
+            end: 'top',
+        },
+        y: 500,
+        duration: 1,
+    })
+
+    v30pcsection12TL.from('.v30-pc-section12 .box1', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .box1',
+            scrub: 0.5,
+            start: 'top top',
+            end: 'top+=300',
+        },
+        opacity: 0,
+        duration: 1,
+    }).fromTo('.v30-pc-section12 .box1 .box', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .box1 .box',
+            scrub: 0.5,
+            start: 'top top-=50%',
+            end: 'top+=700',
+        },
+        opacity: 1,
+        duration: 1,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .box1 .box',
+            scrub: 0.5,
+            start: 'top top-=50%',
+            end: 'top+=700',
+        },
+        opacity: 0,
+        duration: 1,
+    }).from('.v30-pc-section12 .given-to-philandering-pic6-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .given-to-philandering-pic6-img',
+            scrub: 0.5,
+            start: 'top top',
+            end: 'top+=300',
+        },
+        y: 300,
+        x: -400,
+        duration: 1,
+    }).fromTo('.v30-pc-section12 .given-to-philandering-pic2-img,.v30-pc-section12 .given-to-philandering-pic3-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .given-to-philandering-pic2-img,.v30-pc-section12 .given-to-philandering-pic3-img',
+            scrub: 0.5,
+            start: 'top top-=30%',
+            end: 'top+=700',
+        },
+        y: 0,
+        x: 0,
+        opacity: 1,
+        duration: 1,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .given-to-philandering-pic2-img,.v30-pc-section12 .given-to-philandering-pic3-img',
+            scrub: 0.5,
+            start: 'top top-=30%',
+            end: 'top+=700',
+        },
+        y: -100,
+        x: -100,
+        opacity: 0,
+        duration: 1,
+    }).fromTo('.v30-pc-section12 .box2', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .box2',
+            scrub: 0.5,
+            start: 'top top-=100%',
+            end: 'top+=1500',
+        },
+        opacity: 0,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .box2',
+            scrub: 0.5,
+            start: 'top top-=100%',
+            end: 'top+=1500',
+        },
+        opacity: 1,
+    }).fromTo('.v30-pc-section12 .given-to-philandering-pic4-img,.v30-pc-section12 .given-to-philandering-pic5-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .given-to-philandering-pic4-img,.v30-pc-section12 .given-to-philandering-pic5-img',
+            scrub: 0.5,
+            start: 'top top-=40%',
+            end: 'top+=1000',
+        },
+        y: 30,
+        x: 30,
+        opacity: 0,
+        duration: 1,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-pc-section12 .given-to-philandering-pic4-img,.v30-pc-section12 .given-to-philandering-pic5-img',
+            scrub: 0.5,
+            start: 'top top-=40%',
+            end: 'top+=1000',
+        },
+        y: -10,
+        x: -10,
+        opacity: 1,
+        duration: 1,
+    });
+
+    let curvedscreenboxSwiper = new Swiper(".curved-screen-box", {
+        speed: 1000,
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false
+        },
+        direction: 'vertical',
+    });
+
+    let lensmoduleboxSwiper = new Swiper(".lens-module-box", {
+        speed: 1000,
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false
+        },
+    });
+
+    let dynamicwindowboxSwiper = new Swiper(".dynamic-window-box", {
+        speed: 1000,
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false
+        },
+        direction: 'vertical',
+    });
+
+    let materialqualitypicboxSwiper = new Swiper(".material-quality-pic-box", {
+        speed: 1000,
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false
+        },
+        on: {
+            slideChangeTransitionStart: function () {
+                if (this.activeIndex == 0) {
+                    $('.design-color .dots-item1').addClass('active');
+                    $('.design-color .dots-item1').siblings().removeClass('active');
+
+                    $('.design-color .design-color-item1').addClass('active').removeClass('active_s');
+                    $('.design-color .design-color-item1').siblings().removeClass('active').removeClass('active_s');
+
+                    $('.design-2spot5d .design-2spot5d-but1-img').show();
+                    $('.design-2spot5d .design-2spot5d-but1-img').siblings('img').hide();
+                    $('.design-material-quality .material-quality-describe .describe1').addClass('active');
+                    $('.design-material-quality .material-quality-describe .describe1').siblings().removeClass('active');
+                }
+                if (this.activeIndex == 1) {
+                    $('.design-color .dots-item2').addClass('active');
+                    $('.design-color .dots-item2').siblings().removeClass('active');
+
+                    $('.design-color .design-color-item2').addClass('active').addClass('active_s');
+                    $('.design-color .design-color-item2').siblings().removeClass('active').addClass('active_s');
+
+                    $('.design-2spot5d .design-2spot5d-but2-img').show();
+                    $('.design-2spot5d .design-2spot5d-but2-img').siblings('img').hide();
+                    $('.design-material-quality .material-quality-describe .describe2').addClass('active');
+                    $('.design-material-quality .material-quality-describe .describe2').siblings().removeClass('active');
+                }
+            }
+        }
+    });
+
+    let designbutIndex = '';
+    $('.v30-pc-section .v30-pc-section13-box .dots-item').on('click', function () {
+        let index = $(this).data('index');
+        curvedscreenboxSwiper.slideTo(index, 1000);
+        lensmoduleboxSwiper.slideTo(index, 1000);
+        dynamicwindowboxSwiper.slideTo(index, 1000);
+        materialqualitypicboxSwiper.slideTo(index, 1000);
+        designbutIndex = index;
+        let name = '';
+        if (index == 0) {
+            name = 'Peacock Green'
+        }
+        if (index == 1) {
+            name = 'Noble Black'
+        }
+        window.dataLayer.push({
+            "event": "colorSwtichClick",
+            "color": name,
+            "productName": "V30",
+        })
+    });
+
+    gsap.from('.v30-pc-section14 .internal-memory-bg-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section14',
+            scrub: 0.5,
+            start: '-15% top',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-pc-section14 .text4,.v30-pc-section14 .line1,.v30-pc-section14 .text5,.v30-pc-section14 .text6', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section14',
+            scrub: 0.5,
+            start: '-25% top',
+            end: '+100',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        y: 100,
+        duration: 3,
+    });
+
+    gsap.from('.v30-pc-section14 .text7,.v30-pc-section14 .line2,.v30-pc-section14 .text8,.v30-pc-section14 .text9,.v30-pc-section14 .text10,.v30-pc-section14 .text11,.v30-pc-section14 .text12,.v30-pc-section14 .text13', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section14',
+            scrub: 0.5,
+            start: '-15% top',
+            end: '+100',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        y: 100,
+        duration: 3,
+    });
+
+    gsap.from('.v30-pc-section15 .game-scenes-pic-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section15',
+            scrub: 0.5,
+            start: '-30% top',
+            end: '+200',
+        },
+        transformOrigin: "center center",
+        y: 100,
+        duration: 3,
+    });
+
+    gsap.fromTo('.v30-pc-section16 .chip-bg-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section16',
+            scrub: 0.5,
+            start: '-30% top',
+            end: '+200',
+        },
+        scale: 1,
+        transformOrigin: "center center",
+        duration: 3,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-pc-section16',
+            scrub: 0.5,
+            start: '-30% top',
+            end: '+200',
+        },
+        scale: 1.1,
+        transformOrigin: "center center",
+        duration: 3,
+    });
+
+    gsap.from('.v30-pc-section16 .text3,.v30-pc-section16 .text4,.v30-pc-section16 .text5,.v30-pc-section16 .text6,.v30-pc-section16 .text7,.v30-pc-section16 .text8,.v30-pc-section16 .text9,.v30-pc-section16 .text10,.v30-pc-section16 .text11,.v30-pc-section16 .text12,.v30-pc-section16 .text13,.v30-pc-section16 .text14', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section16',
+            scrub: 0.5,
+            start: '-15% top',
+            end: '+100',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        y: 100,
+        duration: 3,
+    });
+
+    gsap.fromTo('.v30-pc-section17 .section-bg-img', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section17',
+            scrub: 0.5,
+            start: '-30% top',
+            end: '+200',
+        },
+        scale: 1,
+        transformOrigin: "center center",
+        duration: 3,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-pc-section17',
+            scrub: 0.5,
+            start: '-30% top',
+            end: '+200',
+        },
+        scale: 1.05,
+        y: -50,
+        transformOrigin: "center center",
+        duration: 3,
+    });
+
+    gsap.from('.v30-pc-section17 .text3,.v30-pc-section17 .text4,.v30-pc-section17 .text5,.v30-pc-section17 .text6,.v30-pc-section17 .text7,.v30-pc-section17 .text8,.v30-pc-section17 .text9,.v30-pc-section17 .text10', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section17',
+            scrub: 0.5,
+            start: '-30% top',
+            end: '+100',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        y: 100,
+        duration: 3,
+    });
+
+    let v30pcsection181box = ScrollTrigger.create({
+        trigger: '.v30-pc-section .v30-pc-section18-box .v30-pc-section18-wrap',
+        start: 'top top',
+        end: 'bottom',
+        pin: ".v30-pc-section18",
+        onUpdate: (progress, direction, isActive) => {
+            let num = progress.progress.toFixed(2);
+            if (num < 0.5) {
+                $('.v30-pc-section18 .tab .tab-text1').addClass('active');
+                $('.v30-pc-section18 .tab .tab-text2').removeClass('active');
+                $('.v30-pc-section18 .tab-line .line').addClass('active1').removeClass('active2');
+                $('.v30-pc-section18 .describe1').addClass('active');
+                $('.v30-pc-section18 .describe2').removeClass('active');
+            }
+            if (num > 0.5) {
+                $('.v30-pc-section18 .tab .tab-text1').removeClass('active');
+                $('.v30-pc-section18 .tab .tab-text2').addClass('active');
+                $('.v30-pc-section18 .tab-line .line').addClass('active2').removeClass('active1');
+                $('.v30-pc-section18 .describe1').removeClass('active');
+                $('.v30-pc-section18 .describe2').addClass('active');
+            }
+        },
+    });
+
+    let v30pcsection19box = ScrollTrigger.create({
+        trigger: '.v30-pc-section .v30-pc-section19-box',
+        start: 'top top',
+        end: '+=1000',
+        pin: ".v30-pc-section19",
+        onUpdate: (progress, direction, isActive) => {
+            let num = progress.progress.toFixed(2);
+            if (num == 0) {
+                $('.v30-pc-section19 .durable-itim1 img').css({
+                    'transform': 'translateX(-50%) scale(1)'
+                });
+            }
+            if (num > 0 && num <= 0.33) {
+                $('.v30-pc-section19 .durable-itim1 img').css({
+                    'transform': 'translateX(-50%) scale(1.2)'
+                });
+                $('.v30-pc-section19 .durable-itim3 img,.v30-pc-section19 .durable-itim2 img').css({
+                    'transform': 'translateX(-50%) scale(1)'
+                });
+                $('.v30-pc-section .v30-pc-section19-box .durable-box .durable-box-wrap').addClass('active1').removeClass("active2").removeClass("active3");
+                $('.v30-pc-section .v30-pc-section19-box .durable-line .line').addClass('active1').removeClass("active2").removeClass("active3");
+            }
+            if (num > 0.33 && num <= 0.66) {
+                $('.v30-pc-section19 .durable-itim2 img').css({
+                    'transform': 'translateX(-50%) scale(1.2)'
+                });
+                $('.v30-pc-section19 .durable-itim3 img,.v30-pc-section19 .durable-itim1 img').css({
+                    'transform': 'translateX(-50%) scale(1)'
+                });
+                $('.v30-pc-section .v30-pc-section19-box .durable-box .durable-box-wrap').addClass('active2').removeClass("active1").removeClass("active3");
+                $('.v30-pc-section .v30-pc-section19-box .durable-line .line').addClass('active2').removeClass("active1").removeClass("active3");
+            }
+            if (num > 0.66 && num <= 0.99) {
+                $('.v30-pc-section19 .durable-itim3 img').css({
+                    'transform': 'translateX(-50%) scale(1.2)'
+                });
+                $('.v30-pc-section19 .durable-itim2 img,.v30-pc-section19 .durable-itim1 img').css({
+                    'transform': 'translateX(-50%) scale(1)'
+                });
+                $('.v30-pc-section .v30-pc-section19-box .durable-box .durable-box-wrap').addClass('active3').removeClass("active2").removeClass("active1");
+                $('.v30-pc-section .v30-pc-section19-box .durable-line .line').addClass('active3').removeClass("active2").removeClass("active1");
+            }
+        }
+    });
+
+    gsap.from('.v30-pc-section20 .os-feature5', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section20',
+            scrub: 0.5,
+            start: 'top top+1000',
+            end: 'top+=1000',
+        },
+        y: 100,
+        scale: 0.9,
+        ease: 'none',
+    })
+
+    gsap.from('.v30-pc-section20 .os-feature1', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section20 .os-feature5',
+            scrub: 0.5,
+            start: 'top center',
+            end: 'top+=500',
+        },
+        y: 100,
+        scale: 0.9,
+        ease: 'none',
+    })
+
+    gsap.from('.v30-pc-section20 .os-feature2', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section20 .os-feature5',
+            scrub: 0.5,
+            start: 'top center',
+            end: 'top+=500',
+        },
+        y: 100,
+        scale: 0.9,
+        ease: 'none',
+    })
+
+    gsap.from('.v30-pc-section20 .os-feature3', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section20 .os-feature1',
+            scrub: 0.5,
+            start: 'top center',
+            end: 'top+=500',
+        },
+        y: 100,
+        scale: 0.9,
+        ease: 'none',
+    })
+
+    gsap.from('.v30-pc-section20 .os-feature4', {
+        scrollTrigger: {
+            trigger: '.v30-pc-section20 .os-feature1',
+            scrub: 0.5,
+            start: 'top center',
+            end: 'top+=500',
+        },
+        y: 100,
+        scale: 0.9,
+        ease: 'none',
+    })
+
+    $('.v30-pc-section19 .durable-itim').on('click', function () {
+        let index = $(this).data('index');
+        let name = '';
+        if (index == 1) {
+            name = 'Comprehensive Cushioning Structure'
+        }
+        if (index == 2) {
+            name = 'Operate Precisely with Wet-Hand Touch'
+        }
+        if (index == 3) {
+            name = 'Survivor of Rigorous Tests'
+        }
+        window.dataLayer.push({
+            "event": "pdpBannerClick",
+            "bannerName": "V30",
+            "bannerPosition": name,
+            "productName": index
+        })
+    });
+
+    $('.design-2spot5d-but').on('click', function () {
+        $('.v30-pc-section-layer').fadeIn();
+        $('.v30-pc-section-images-layer').fadeIn().addClass("active");
+        // $('.v30-pc-section-video-layer').fadeIn().addClass('active');
+        let name = '';
+        if (designbutIndex == 0) {
+            name = 'Waving Aqua Know More'
+        }
+        if (designbutIndex == 1) {
+            name = 'Lush Green Know More'
+        }
+        if (designbutIndex == 2) {
+            name = 'Bloom White Know More'
+        }
+        if (designbutIndex == 3) {
+            name = 'Noble Black Know More'
+        }
+        window.dataLayer.push({
+            "event": "pdpLearnMore",
+            "productName": "V30",
+            "buttonName": name
+        });
+        // window.dataLayer.push({
+        //     "event": "video",
+        //     "videoStep":"play","25%","50%","100%","pause",
+        //     "videoURL": "$videoURL"
+        // })
+    });
+
+    $('.pc-section-layer-close').on('click', function () {
+        $('.v30-pc-section-layer').fadeOut();
+        $('.v30-pc-section-images-layer').fadeOut().removeClass("active");
+        $('.v30-pc-section-video-layer').fadeOut();
+    });
+
+    setTimeout(() => {
+        v30pcsection2TL.scrollTrigger.refresh();
+        v30pcsection3box.refresh();
+        v30pcsection4box.refresh();
+        v30pcsection5box.refresh();
+        v30pcsection8box.refresh();
+        v30pcsection12TL.scrollTrigger.refresh();
+        v30pcsection181box.refresh();
+        v30pcsection19box.refresh();
+        ScrollTrigger.refresh();
+    }, 10000);
+}
+
+$('.os-but').on('click', function () {
+    window.dataLayer.push({
+        "event": "pdpLearnMore",
+        "productName": "V30",
+        "buttonName": 'OS Know More'
+    });
+    window.open('https://www.vivo.com/en/funtouch');
+});
+
+function v30mobiFun() {
+    $('.v30-mobi-section1 .item').on('click', function () {
+        let index = $(this).data('index');
+        let top = '';
+        let name = '';
+        if (index == 1) {
+            name = 'Aura Light Portrait';
+            top = $('.v30-mobi-section .v30-mobi-section2-box').offset().top;
+        }
+        if (index == 2) {
+            name = "vivo's Slimmest Phone with 5000 mAh Battery";
+            top = $('.v30-mobi-section .v30-mobi-section12-box').offset().top;
+        }
+        if (index == 3) {
+            name = '12 GB + 12 GB Extended RAM';
+            top = $('.v30-mobi-section15').offset().top;
+        }
+        window.dataLayer.push({
+            "event": "pdpBannerClick",
+            "bannerName": "v30",
+            "bannerPosition": name,
+            "productName": index
+        });
+        $('html,body').animate({ scrollTop: top }, 10);
+    });
+
+
+    $('.v30-content-mobi').on("touchend", function () {
+        $('.video4')[0].play();
+        $('.video5')[0].play();
+    });
+
+    gsap.from('.v30-mobi-section1 .item1', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section1 .kv-bg-img',
+            scrub: 0.5,
+            start: 'top top',
+            end: 'top+=100',
+        },
+        y: 50,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section1 .item2', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section1 .item1',
+            scrub: 0.5,
+            start: 'top center',
+            end: 'top+=100',
+        },
+        y: 50,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section1 .item3', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section1 .item2',
+            scrub: 0.5,
+            start: 'top center',
+            end: 'top+=100',
+        },
+        y: 50,
+        duration: 1,
+    });
+
+    let v30mobisection2TL = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.v30-mobi-section2 .v30-mobi-section2-box',
+            start: 'top -0.1%',
+            end: '+=1000',
+            pin: ".v30-mobi-section2 .v30-mobi-section2-box",
+        }
+    });
+
+    v30mobisection2TL.from('.v30-mobi-section2 .soft-light-ring-concept-bg2-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section2 .soft-light-ring-concept-bg2-img',
+            scrub: 0.5,
+            start: 'top top',
+            end: '+300',
+        },
+        opacity: 0,
+        duration: 1,
+    }).from('.v30-mobi-section2 .soft-light-ring-concept-bg3-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section2 .soft-light-ring-concept-bg3-img',
+            scrub: 0.5,
+            start: 'top -35%',
+            end: '+600',
+        },
+        opacity: 0,
+        duration: 1,
+    }).from('.v30-mobi-section2 .soft-light-ring-concept-bg4-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section2 .soft-light-ring-concept-bg4-img',
+            scrub: 0.5,
+            start: 'top -70%',
+            end: '+900',
+        },
+        opacity: 0,
+        duration: 1,
+    }).from('.v30-mobi-section2 .soft-light-ring-concept-font', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section2 .soft-light-ring-concept-font',
+            scrub: 0.5,
+            start: 'top -75%',
+            end: '+900',
+        },
+        opacity: 0,
+        duration: 1,
+    });
+
+    let v30mobisectionswiper1box = new Swiper(".v30-mobi-section-swiper1-box", {
+        effect: "creative",
+        creativeEffect: {
+            prev: {
+                translate: ["-100%", 0, 1],
+            },
+            next: {
+                translate: ["2.8%", "3.8%", -1],
+            },
+        },
+    });
+
+    gsap.from('.v30-mobi-section3 .v30-mobi-section-swiper1-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section3',
+            scrub: 1,
+            start: '-50% top',
+            end: 'top+=100',
+        },
+        y: -50,
+        duration: 1,
+    });
+
+    let v30mobisection3 = ScrollTrigger.create({
+        trigger: '.v30-mobi-section3 .v30-mobi-section3-box',
+        start: 'top top',
+        end: '+=1400',
+        pin: ".v30-mobi-section3 .v30-mobi-section3-box",
+        onUpdate: (progress, direction, isActive) => {
+            let num = progress.progress.toFixed(2);
+            if (num < 0.25) {
+                v30mobisectionswiper1box.slideTo(0, 500);
+                $('.v30-mobi-section3 .dots-item1').addClass('active');
+                $('.v30-mobi-section3 .dots-item1').siblings().removeClass('active');
+                $('.v30-mobi-section3 .characters-item1').addClass('active');
+                $('.v30-mobi-section3 .characters-item1').siblings().removeClass('active');
+
+                $('.v30-mobi-section3 .swiper-slide1 .selected-img').addClass('active');
+                $('.v30-mobi-section3 .swiper-slide1 .selected').addClass('active');
+                $('.v30-mobi-section3 .swiper-slide1').siblings().find('.selected-img').removeClass('active');
+                $('.v30-mobi-section3 .swiper-slide1').siblings().find('.selected').removeClass('active');
+            }
+            if (num >= 0.25 && num < 0.5) {
+                v30mobisectionswiper1box.slideTo(1, 500);
+                $('.v30-mobi-section3 .dots-item2').addClass('active');
+                $('.v30-mobi-section3 .dots-item2').siblings().removeClass('active');
+                $('.v30-mobi-section3 .characters-item2').addClass('active');
+                $('.v30-mobi-section3 .characters-item2').siblings().removeClass('active');
+
+                $('.v30-mobi-section3 .swiper-slide2 .selected-img').addClass('active');
+                $('.v30-mobi-section3 .swiper-slide2 .selected').addClass('active');
+                $('.v30-mobi-section3 .swiper-slide2').siblings().find('.selected-img').removeClass('active');
+                $('.v30-mobi-section3 .swiper-slide2').siblings().find('.selected').removeClass('active');
+            }
+            if (num >= 0.5 && num < 0.75) {
+                v30mobisectionswiper1box.slideTo(2, 500);
+                $('.v30-mobi-section3 .dots-item3').addClass('active');
+                $('.v30-mobi-section3 .dots-item3').siblings().removeClass('active');
+                $('.v30-mobi-section3 .characters-item3').addClass('active');
+                $('.v30-mobi-section3 .characters-item3').siblings().removeClass('active');
+
+                $('.v30-mobi-section3 .swiper-slide3 .selected-img').addClass('active');
+                $('.v30-mobi-section3 .swiper-slide3 .selected').addClass('active');
+                $('.v30-mobi-section3 .swiper-slide3').siblings().find('.selected-img').removeClass('active');
+                $('.v30-mobi-section3 .swiper-slide3').siblings().find('.selected').removeClass('active');
+            }
+            if (num >= 0.75 && num < 0.9) {
+                v30mobisectionswiper1box.slideTo(3, 500);
+                $('.v30-mobi-section3 .dots-item4').addClass('active');
+                $('.v30-mobi-section3 .dots-item4').siblings().removeClass('active');
+                $('.v30-mobi-section3 .characters-item4').addClass('active');
+                $('.v30-mobi-section3 .characters-item4').siblings().removeClass('active');
+
+                $('.v30-mobi-section3 .swiper-slide4 .selected-img').addClass('active');
+                $('.v30-mobi-section3 .swiper-slide4 .selected').addClass('active');
+                $('.v30-mobi-section3 .swiper-slide4').siblings().find('.selected-img').removeClass('active');
+                $('.v30-mobi-section3 .swiper-slide4').siblings().find('.selected').removeClass('active');
+            }
+        }
+    });
+
+    let v30mobisectio4TL = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.v30-mobi-section4 .v30-mobi-section4-box',
+            start: 'top top',
+            end: '+=3000',
+            pin: ".v30-mobi-section4 .v30-mobi-section4-box",
+        }
+    });
+
+    gsap.from('.v30-mobi-section4 .five-thousand-w-shadow-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section4 .five-thousand-w-shadow-img',
+            scrub: 0.5,
+            start: '-1300',
+            end: '-550',
+        },
+        y: 500,
+        opacity: 0,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section4 .five-thousand-w-product1-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section4 .five-thousand-w-product1-img',
+            scrub: 0.5,
+            start: '-1300',
+            end: '-500',
+        },
+        y: 500,
+        duration: 1,
+    });
+
+    gsap.to('.v30-mobi-section4 .title-box .text2', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section4 .title-box .text2',
+            scrub: 0.5,
+            start: 'top -50%',
+            end: '700',
+        },
+        y: 10,
+        opacity: 0,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section4 .introduce1-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section4 .introduce1-box',
+            scrub: 0.5,
+            start: 'top -60%',
+            end: '800',
+        },
+        y: 100,
+        opacity: 0,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section4 .five-thousand-w-product2-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section4 .five-thousand-w-product2-img',
+            scrub: 0.5,
+            start: 'top 30%',
+            end: '41%',
+        },
+        y: 500,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section4 .introduce2-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section4 .introduce2-box',
+            scrub: 0.5,
+            start: 'top -140%',
+            end: '1400',
+        },
+        y: 100,
+        opacity: 0,
+        duration: 1,
+    });
+
+    let v30mobisectionswiper2box = new Swiper(".v30-mobi-section-swiper2-box", {
+        effect: "creative",
+        creativeEffect: {
+            prev: {
+                translate: ["-100%", 0, 1],
+            },
+            next: {
+                translate: ["2.8%", "3.8%", -1],
+            },
+        },
+    });
+
+    gsap.from('.v30-mobi-section5 .v30-mobi-section-swiper2-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section5',
+            scrub: 1,
+            start: '-50% top',
+            end: 'top+=100',
+        },
+        y: -50,
+        duration: 1,
+    });
+
+    let v30mobisection5 = ScrollTrigger.create({
+        trigger: '.v30-mobi-section5 .v30-mobi-section5-box',
+        start: 'top top',
+        end: '+=800',
+        pin: ".v30-mobi-section5 .v30-mobi-section5-box",
+        onUpdate: (progress, direction, isActive) => {
+            let num = progress.progress.toFixed(2);
+            if (num >= 0.21 && num < 0.51) {
+                v30mobisectionswiper2box.slideTo(0, 500);
+                $('.v30-mobi-section5 .dots-item1').addClass('active');
+                $('.v30-mobi-section5 .dots-item1').siblings().removeClass('active');
+                $('.v30-mobi-section5 .characters-item1').addClass('active');
+                $('.v30-mobi-section5 .characters-item1').siblings().removeClass('active');
+
+                $('.v30-mobi-section5 .swiper-slide1 .selected-img').addClass('active');
+                $('.v30-mobi-section5 .swiper-slide1 .selected').addClass('active');
+                $('.v30-mobi-section5 .swiper-slide1').siblings().find('.selected-img').removeClass('active');
+                $('.v30-mobi-section5 .swiper-slide1').siblings().find('.selected').removeClass('active');
+            }
+            if (num >= 0.51 && num < 0.71) {
+                v30mobisectionswiper2box.slideTo(1, 500);
+                $('.v30-mobi-section5 .dots-item2').addClass('active');
+                $('.v30-mobi-section5 .dots-item2').siblings().removeClass('active');
+                $('.v30-mobi-section5 .characters-item2').addClass('active');
+                $('.v30-mobi-section5 .characters-item2').siblings().removeClass('active');
+
+                $('.v30-mobi-section5 .swiper-slide2 .selected-img').addClass('active');
+                $('.v30-mobi-section5 .swiper-slide2 .selected').addClass('active');
+                $('.v30-mobi-section5 .swiper-slide2').siblings().find('.selected-img').removeClass('active');
+                $('.v30-mobi-section5 .swiper-slide2').siblings().find('.selected').removeClass('active');
+            }
+        }
+    });
+
+    gsap.from('.v30-mobi-section7 .vcs-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section7',
+            scrub: 0.5,
+            start: '-50% top',
+            end: 'top+=10',
+        },
+        scale: 1.1,
+        y: 100,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section7 .characters-item1', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section7 .vcs-box',
+            scrub: 0.5,
+            start: 'top center',
+            end: '+100',
+        },
+        y: 100,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section24 .front-wide-angle-pic-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section24',
+            scrub: 0.5,
+            start: '-50% top',
+            end: 'top+=10',
+        },
+        scale: 1.1,
+        y: 50,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section24 .box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section24',
+            scrub: 0.5,
+            start: 'top center',
+            end: '+100',
+        },
+        y: 100,
+        opacity: 0,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section8 .characters-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section8',
+            scrub: 0.5,
+            start: '-100% top',
+            end: '-10% top',
+        },
+        scale: 1.1,
+        y: 100,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section9 .video-shooting-pic-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section9',
+            scrub: 0.5,
+            start: '-100% top',
+            end: 'top+=50',
+        },
+        opacity: 0,
+        x: 100,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section10 .instantly1-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section10',
+            scrub: 0.5,
+            start: '-50% top',
+            end: 'top+=50',
+        },
+        x: -50,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section10 .instantly2-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section10',
+            scrub: 0.5,
+            start: '-50% top',
+            end: 'top+=50',
+        },
+        x: 50,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section10 .instantly3-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section10',
+            scrub: 0.5,
+            start: '-50% top',
+            end: 'top+=50',
+        },
+        x: -50,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section10 .instantly4-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section10',
+            scrub: 0.5,
+            start: '-50% top',
+            end: 'top+=50',
+        },
+        x: 50,
+        duration: 1,
+    });
+
+    let curvedscreenmobiboxSwiper = new Swiper(".curved-screen-mobibox", {
+        direction: 'vertical',
+    });
+
+    let lensmodulemobiboxSwiper = new Swiper(".lens-module-mobibox", {});
+
+    let designzumobiboxswiper = new Swiper(".design-zu-mobibox", {});
+
+    let designstepmobiboxswiper = new Swiper(".design-step-mobibox", {});
+
+    let materialqualitypicmobiboxSwiper = new Swiper(".material-quality-pic-mobibox", {});
+
+    let v30mobisection = ScrollTrigger.create({
+        trigger: '.v30-mobi-section .v30-mobi-section14-box',
+        start: 'top top',
+        end: '+=1000',
+        pin: ".v30-mobi-section .v30-mobi-section14-box",
+        onUpdate: (progress, direction, isActive) => {
+            let num = progress.progress.toFixed(2);
+            if (num < 0.49) {
+                $('.v30-mobi-section .v30-mobi-section14-box .dots-item1').addClass('active');
+                $('.v30-mobi-section .v30-mobi-section14-box .dots-item1').siblings().removeClass('active');
+                $('.v30-mobi-section .v30-mobi-section14-box .design-color-item1').addClass('active').addClass('active_s');
+                $('.v30-mobi-section .v30-mobi-section14-box .design-color-item1').siblings().removeClass('active').removeClass('active_s');
+
+                curvedscreenmobiboxSwiper.slideTo(0, 1000);
+                lensmodulemobiboxSwiper.slideTo(0, 1000);
+                materialqualitypicmobiboxSwiper.slideTo(0, 1000);
+                designzumobiboxswiper.slideTo(0, 1000);
+                designstepmobiboxswiper.slideTo(0, 1000);
+
+
+                $('.v30-mobi-section .v30-mobi-section14-box .design-2spot5d-but1-img').show();
+                $('.v30-mobi-section .v30-mobi-section14-box .design-2spot5d-but1-img').siblings('img').hide();
+
+                $('.v30-mobi-section .v30-mobi-section14-box .material-quality-describe .describe1').addClass('active');
+                $('.v30-mobi-section .v30-mobi-section14-box .material-quality-describe .describe1').siblings().removeClass('active');
+            }
+            if (num >= 0.5) {
+                $('.v30-mobi-section .v30-mobi-section14-box .dots-item2').addClass('active');
+                $('.v30-mobi-section .v30-mobi-section14-box .dots-item2').siblings().removeClass('active');
+                $('.v30-mobi-section .v30-mobi-section14-box .design-color-item2').addClass('active').addClass('active_s');
+                $('.v30-mobi-section .v30-mobi-section14-box .design-color-item2').siblings().removeClass('active').removeClass('active_s');
+
+                curvedscreenmobiboxSwiper.slideTo(1, 1000);
+                lensmodulemobiboxSwiper.slideTo(1, 1000);
+                materialqualitypicmobiboxSwiper.slideTo(1, 1000);
+                designzumobiboxswiper.slideTo(1, 1000);
+                designstepmobiboxswiper.slideTo(1, 1000);
+
+                $('.v30-mobi-section .v30-mobi-section14-box .design-2spot5d-but2-img').show();
+                $('.v30-mobi-section .v30-mobi-section14-box .design-2spot5d-but2-img').siblings('img').hide();
+                $('.v30-mobi-section .v30-mobi-section14-box .material-quality-describe .describe2').addClass('active');
+                $('.v30-mobi-section .v30-mobi-section14-box .material-quality-describe .describe2').siblings().removeClass('active');
+            }
+        }
+    });
+
+    let morebutIndex = '';
+    $('.v30-mobi-section .v30-mobi-section14-box .dots-item').on('click', function () {
+        let index = $(this).data('index');
+        console.log(index)
+        var array = [0, 0.5]
+        let v30mobisectionTop = v30mobisection.start + (v30mobisection.end - v30mobisection.start) * array[index]
+        v30mobisection.scroll(v30mobisectionTop);
+        v30mobisection.refresh();
+        morebutIndex = index;
+        let name = '';
+        if (index == 0) {
+            name = 'Noble Black'
+        }
+        if (index == 1) {
+            name = 'Peacock Green'
+        }
+        window.dataLayer.push({
+            "event": "colorSwtichClick",
+            "color": name,
+            "productName": "V30",
+        })
+    });
+
+    let v30mobisection12TL = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.v30-mobi-section .v30-mobi-section12-box',
+            start: 'top top',
+            end: '+=2500',
+            pin: ".v30-mobi-section12 .v30-mobi-section12-box",
+        }
+    });
+
+    gsap.from('.v30-mobi-section12 .given-to-philandering-pic-box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12',
+            scrub: 0.5,
+            start: '-50% top-=10%',
+            end: 'top',
+        },
+        y: 500,
+        duration: 1,
+    })
+
+    v30mobisection12TL.from('.v30-mobi-section12 .box1', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .box1',
+            scrub: 0.5,
+            start: 'top top',
+            end: 'top+=300',
+        },
+        opacity: 0,
+        duration: 1,
+    }).fromTo('.v30-mobi-section12 .box1 .box', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .box1 .box',
+            scrub: 0.5,
+            start: 'top top-=50%',
+            end: 'top+=700',
+        },
+        opacity: 1,
+        duration: 1,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .box1 .box',
+            scrub: 0.5,
+            start: 'top top-=50%',
+            end: 'top+=700',
+        },
+        opacity: 0,
+        duration: 1,
+    }).from('.v30-mobi-section12 .given-to-philandering-pic6-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .given-to-philandering-pic6-img',
+            scrub: 0.5,
+            start: '-150% top',
+            end: 'top+=100',
+        },
+        y: 300,
+        x: -400,
+        duration: 1,
+    }).fromTo('.v30-mobi-section12 .given-to-philandering-pic2-img,.v30-mobi-section12 .given-to-philandering-pic3-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .given-to-philandering-pic2-img,.v30-mobi-section12 .given-to-philandering-pic3-img',
+            scrub: 0.5,
+            start: 'top top-=30%',
+            end: 'top+=700',
+        },
+        y: 0,
+        x: 0,
+        opacity: 1,
+        duration: 1,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .given-to-philandering-pic2-img,.v30-mobi-section12 .given-to-philandering-pic3-img',
+            scrub: 0.5,
+            start: 'top top-=30%',
+            end: 'top+=700',
+        },
+        y: -50,
+        x: -50,
+        opacity: 0,
+        duration: 1,
+    }).fromTo('.v30-mobi-section12 .box2', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .box2',
+            scrub: 0.5,
+            start: 'top top-=100%',
+            end: 'top+=1500',
+        },
+        opacity: 0,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .box2',
+            scrub: 0.5,
+            start: 'top top-=100%',
+            end: 'top+=1500',
+        },
+        opacity: 1,
+    }).fromTo('.v30-mobi-section12 .given-to-philandering-pic4-img,.v30-mobi-section12 .given-to-philandering-pic5-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .given-to-philandering-pic4-img,.v30-mobi-section12 .given-to-philandering-pic5-img',
+            scrub: 0.5,
+            start: 'top top-=40%',
+            end: 'top+=1000',
+        },
+        y: 30,
+        x: 30,
+        opacity: 0,
+        duration: 1,
+    }, {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section12 .given-to-philandering-pic4-img,.v30-mobi-section12 .given-to-philandering-pic5-img',
+            scrub: 0.5,
+            start: 'top top-=40%',
+            end: 'top+=1000',
+        },
+        y: -10,
+        x: -10,
+        opacity: 1,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section15 .internal-memory-bg-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section15',
+            scrub: 0.5,
+            start: '-100% top',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.3,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section15 .text12,.v30-mobi-section15 .text13,.v30-mobi-section15 .line1,.v30-mobi-section15 .line2,.v30-mobi-section15 .text4,.v30-mobi-section15 .text5,.v30-mobi-section15 .text6,.v30-mobi-section15 .text7,.v30-mobi-section15 .text8,.v30-mobi-section15 .text9,.v30-mobi-section15 .text10,.v30-mobi-section15 .text11', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section15',
+            scrub: 0.5,
+            start: '-60% top',
+            end: '+200',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        y: 100,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section16 .game-scenes-pic-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section16',
+            scrub: 0.5,
+            start: '-100% top',
+            end: 'top+=100',
+        },
+        transformOrigin: "center center",
+        y: 100,
+        duration: 3,
+    });
+
+
+    gsap.from('.v30-mobi-section17 .chip-pic-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section17',
+            scrub: 0.5,
+            start: '-100% top',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 1,
+    });
+
+    gsap.from('.v30-mobi-section17 .text2,.v30-mobi-section17 .text3,.v30-mobi-section17 .text4,.v30-mobi-section17 .text5,.v30-mobi-section17 .text6,.v30-mobi-section17 .text7,.v30-mobi-section17 .text8,.v30-mobi-section17 .text9,.v30-mobi-section17 .text10,.v30-mobi-section17 .text11,.v30-mobi-section17 .text12,.v30-mobi-section17 .text13,.v30-mobi-section17 .text14', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section17',
+            scrub: 0.5,
+            start: '-60% top',
+            end: '+200',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        y: 100,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section18 .section-pic-img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section18',
+            scrub: 0.5,
+            start: '-100% top',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.3,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section18 .text2,.v30-mobi-section18 .text3,.v30-mobi-section18 .text4,.v30-mobi-section18 .text5,.v30-mobi-section18 .text6,.v30-mobi-section18 .text7,.v30-mobi-section18 .text8,.v30-mobi-section18 .text9,.v30-mobi-section18 .text10 ', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section18',
+            scrub: 0.5,
+            start: '-60% top',
+            end: '+200',
+        },
+        transformOrigin: "center center",
+        opacity: 0,
+        y: 100,
+        duration: 3,
+    });
+
+    let v30sunshinescreen = ScrollTrigger.create({
+        trigger: '.v30-mobi-section .v30-mobi-section20-box',
+        start: 'top top',
+        end: '+=1000',
+        pin: ".v30-mobi-section .v30-mobi-section20-box",
+        onUpdate: (progress, direction, isActive) => {
+            let num = progress.progress.toFixed(2);
+            if (num < 0.5) {
+                $('.v30-mobi-section20 .tab .tab-text1').addClass('active');
+                $('.v30-mobi-section20 .tab .tab-text2').removeClass('active');
+                $('.v30-mobi-section20 .tab-line .line').addClass('active1').removeClass('active2');
+                $('.v30-mobi-section20 .describe1').addClass('active');
+                $('.v30-mobi-section20 .describe2').removeClass('active');
+            }
+            if (num > 0.5) {
+                $('.v30-mobi-section20 .tab .tab-text1').removeClass('active');
+                $('.v30-mobi-section20 .tab .tab-text2').addClass('active');
+                $('.v30-mobi-section20 .tab-line .line').addClass('active2').removeClass('active1');
+                $('.v30-mobi-section20 .describe1').removeClass('active');
+                $('.v30-mobi-section20 .describe2').addClass('active');
+            }
+        }
+    });
+
+    gsap.from('.v30-mobi-section21 .feature1 img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section21',
+            scrub: 0.5,
+            start: '-10% top-=10%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section21 .feature2 img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section21 .feature1',
+            scrub: 0.5,
+            start: 'top center-=30%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section21 .feature3 img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section21 .feature2',
+            scrub: 0.5,
+            start: 'top center-=30%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section22 .os-feature5 img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section22',
+            scrub: 0.5,
+            start: 'top top+=30%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section22 .os-feature1 img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section22 .os-feature5',
+            scrub: 0.5,
+            start: 'top center-=30%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section22 .os-feature2 img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section22 .os-feature1',
+            scrub: 0.5,
+            start: 'top center-=30%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section22 .os-feature3 img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section22 .os-feature2',
+            scrub: 0.5,
+            start: 'top center-=30%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    gsap.from('.v30-mobi-section22 .os-feature4 img', {
+        scrollTrigger: {
+            trigger: '.v30-mobi-section22 .os-feature3',
+            scrub: 0.5,
+            start: 'top center-=30%',
+            end: 'top+=200',
+        },
+        transformOrigin: "center center",
+        scale: 1.1,
+        duration: 3,
+    });
+
+    $('.more-but').on('click', function () {
+        $('.v30-mobi-section-layer').fadeIn();
+        $('.v30-mobi-section-images-layer').fadeIn().addClass('active');
+        // $('.v30-mobi-section-video-layer').fadeIn();
+        let name = '';
+        if (morebutIndex == 0) {
+            name = 'Waving Aqua Know More'
+        }
+        if (morebutIndex == 1) {
+            name = 'Lush Green Know More'
+        }
+        if (morebutIndex == 2) {
+            name = 'Bloom White Know More'
+        }
+        if (morebutIndex == 3) {
+            name = 'Noble Black Know More'
+        }
+        window.dataLayer.push({
+            "event": "pdpLearnMore",
+            "productName": "V30",
+            "buttonName": name
+        });
+        // window.dataLayer.push({
+        //     "event": "video",
+        //     "videoStep":"play","25%","50%","100%","pause",
+        //     "videoURL": "$videoURL"
+        // })
+    });
+
+    $('.mobi-section-layer-close').on('click', function () {
+        $('.v30-mobi-section-layer').fadeOut();
+        $('.v30-mobi-section-images-layer').fadeOut().removeClass('active');
+        $('.v30-mobi-section-video-layer').fadeOut();
+    });
+
+    setTimeout(() => {
+        v30mobisection2TL.scrollTrigger.refresh();
+        v30mobisection3.refresh();
+        v30mobisectio4TL.scrollTrigger.refresh();
+        v30mobisection5.refresh();
+        v30mobisection12TL.scrollTrigger.refresh();
+        v30mobisection.refresh();
+        v30sunshinescreen.refresh();
+        ScrollTrigger.refresh();
+    }, 10000);
+}
